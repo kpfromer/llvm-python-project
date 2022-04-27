@@ -1,6 +1,7 @@
 from __future__ import print_function
 from ctypes import CFUNCTYPE, c_double,c_int32
 import llvmlite.binding as llvm
+import os
 
 def create_execution_engine():
     """
@@ -38,6 +39,10 @@ def run(module):
     llvm.initialize()
     llvm.initialize_native_target()
     llvm.initialize_native_asmprinter()  # yes, even this one
+
+    # load in shared library for `input` and `print`
+    shared_library_path = os.path.join(os.getcwd(), "shared.so")
+    llvm.load_library_permanently(shared_library_path)
 
     engine = create_execution_engine()
     mod = compile_ir(engine, str(module))
