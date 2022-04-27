@@ -139,17 +139,8 @@ class Translator:
         # print statement
         elif isinstance(statement, Call):
             self.visit_print_statement(statement, builder)
-        # if isinstance(statement, Expr) and not isinstance(statement.value, Call):
-        #     # self.visit_expr(statement, builder)
-        #     return self.visit_expr(statement, builder)
-        # elif isinstance(statement, Expr) and isinstance(statement.value, Call):
-        #     return self.visit_function_call(statement.value, builder)
         else:
             raise Exception("Unknown statement type: " + str(statement))
-    # if assign ....
-    # elif discard ...
-    # elif function call ... (input, print)
-
 
 def translate(fileAst: Module):
     return Translator().translate(fileAst)
