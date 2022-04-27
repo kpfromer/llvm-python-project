@@ -55,8 +55,6 @@ class Translator:
             raise Exception("Unknown name type: " + str(name))
     
     def visit_leaf(self, leaf):
-        # if isinstance(leaf, Name):
-        #     return leaf.id
         if isinstance(leaf, Constant):
             return self.visit_constant(leaf)
         elif isinstance(leaf, Name):
@@ -91,14 +89,12 @@ class Translator:
     def visit_expr(self, expr, builder):
         if isinstance(expr, (Constant, Name)):
             return self.visit_leaf(expr)
-        # elif isinstance(expr, Name):
-        #     return builder.load(name=expr.id)
         elif isinstance(expr, BinOp):
             return self.visit_binary_op(expr, builder)
         elif isinstance(expr, UnaryOp):
             return self.visit_unary_op(expr, builder)
-        # if isinstance(expr, BinOp):
-        #     return self.visit_binary_op(expr.value, builder)
+        elif isinstance(expr, Call):
+            return self.visit_function_call(expr, builder)
         else:
             raise Exception("Unknown expr type: " + str(expr))
     
@@ -106,7 +102,8 @@ class Translator:
         if isinstance(call, Call):
             if isinstance(call.func, Name):
                 if call.func.id == "print":
-                    return builder.call(self.print_fn, [self.visit_constant(call.args[0])])
+                    raise Exception("print() is not supported from this function")
+                    # return builder.call(self.print_fn, [self.visit_constant(call.args[0])])
                 elif call.func.id == "input":
                     return builder.call(self.input_fn, [], name=self.get_tmp_var())
                 else:
