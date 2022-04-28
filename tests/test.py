@@ -11,7 +11,8 @@
 # print(c)
 # print(a + b + c + 1000)
 
-a = input()
+# a = input()
+a = 22
 print(a + 55)
 a = 4 + a + a
 print(a)

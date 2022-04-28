@@ -23,7 +23,7 @@ class Translator:
         return var
 
     def translate(self, ast_body):
-        mod = ir.Module(name="test")
+        mod = ir.Module(name="main")
 
         print_fn_type = ir.FunctionType(ir.VoidType(), [ir.IntType(32)])
         self.print_fn = ir.Function(mod, print_fn_type, name="print")
@@ -32,7 +32,7 @@ class Translator:
         self.input_fn = ir.Function(mod, input_fn_type, name="input")
 
         func_type = ir.FunctionType(ir.IntType(32), ())
-        func = ir.Function(mod, func_type, name="test")
+        func = ir.Function(mod, func_type, name="main")
         block = func.append_basic_block(name="entry")
         builder = ir.IRBuilder(block)
         for statement in ast_body:

@@ -48,9 +48,9 @@ def run(module):
     mod = compile_ir(engine, str(module))
 
     # Look up the function pointer (a Python int)
-    func_ptr = engine.get_function_address("test")
+    func_ptr = engine.get_function_address("main")
 
     # Run the function via ctypes
     cfunc = CFUNCTYPE(c_int32)(func_ptr)
     res = cfunc()
-    print("test(...) =", res)
+    print("main(...) =", res)
