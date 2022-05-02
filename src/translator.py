@@ -14,7 +14,6 @@ class Translator:
         self.var_count = 0
         self.print_fn = None
         self.input_fn = None
-        # TODO:
         self.mappings = dict() # variable -> latest instruction
     
     def get_tmp_var(self):
@@ -31,14 +30,15 @@ class Translator:
         input_fn_type = ir.FunctionType(ir.IntType(32), [])
         self.input_fn = ir.Function(mod, input_fn_type, name="input")
 
-        func_type = ir.FunctionType(ir.IntType(32), ())
+        func_type = ir.FunctionType(ir.VoidType(), ())
         func = ir.Function(mod, func_type, name="main")
         block = func.append_basic_block(name="entry")
         builder = ir.IRBuilder(block)
         for statement in ast_body:
             self.visit_statement(statement, builder)
 
-        builder.ret(ir.Constant(ir.IntType(32), 0))
+        # builder.ret(ir.Constant(ir.IntType(32), 0))
+        builder.ret_void()
 
         return mod
 

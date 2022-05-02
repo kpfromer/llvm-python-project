@@ -19,9 +19,6 @@ def main():
 
     if filename is None:
         # run with llvmlite
-        # print(flattened_list_to_string(out))
-        # print(module)
-        # print(llvm.get_default_triple())
         run(module)
     else:
         # otherwise, generate binary
